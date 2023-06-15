@@ -33,5 +33,10 @@ class MovieRepositoryImpl extends MovieRepository {
     
     return datasource.getTopRated( page:  page );
   }
+  
+  @override
+  Future<Movie> getMovieById(String id) {
+    return datasource.getMovieById( id );
+  }
 
 }
