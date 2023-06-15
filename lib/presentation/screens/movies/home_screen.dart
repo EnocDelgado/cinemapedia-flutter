@@ -33,6 +33,9 @@ class _HomeViewState extends ConsumerState<_HomeView> {
     super.initState();
 
     ref.read( nowPlayingMoviesProvider.notifier ).loadNextPage();
+    ref.read( popularMoviesProvider.notifier ).loadNextPage();
+    ref.read( topRatedMoviesProvider.notifier ).loadNextPage();
+    ref.read( upcomingMoviesProvider.notifier ).loadNextPage();
   }
 
   @override
@@ -40,6 +43,9 @@ class _HomeViewState extends ConsumerState<_HomeView> {
 
     final nowPlayingMovies = ref.watch( nowPlayingMoviesProvider );
     final slideShowMovies = ref.watch( moviesSlideshowProvider );
+    final popularMovies = ref.watch( popularMoviesProvider );
+    final topRatedMovies = ref.watch( topRatedMoviesProvider );
+    final upcomingMovies = ref.watch( upcomingMoviesProvider );
 
     return CustomScrollView(
       slivers: [
@@ -70,29 +76,29 @@ class _HomeViewState extends ConsumerState<_HomeView> {
                   ),
             
                   MovieHorizontalListView(
-                    movies: nowPlayingMovies,
-                    title: 'Soon',
+                    movies: upcomingMovies,
+                    title: 'Up-coming',
                     subtitle: 'This month',
                     loadNextPage: () { 
-                      ref.read( nowPlayingMoviesProvider.notifier ).loadNextPage();
+                      ref.read( upcomingMoviesProvider.notifier ).loadNextPage();
                     }
                   ),
             
                   MovieHorizontalListView(
-                    movies: nowPlayingMovies,
+                    movies: popularMovies,
                     title: 'Popular',
                     // subtitle: 'Monday 20',
                     loadNextPage: () { 
-                      ref.read( nowPlayingMoviesProvider.notifier ).loadNextPage();
+                      ref.read( popularMoviesProvider.notifier ).loadNextPage();
                     }
                   ),
             
                   MovieHorizontalListView(
-                    movies: nowPlayingMovies,
-                    title: 'Best Rate',
+                    movies: topRatedMovies,
+                    title: 'Top Rated',
                     subtitle: 'Of all time',
                     loadNextPage: () { 
-                      ref.read( nowPlayingMoviesProvider.notifier ).loadNextPage();
+                      ref.read( topRatedMoviesProvider.notifier ).loadNextPage();
                     }
                   ),
 
