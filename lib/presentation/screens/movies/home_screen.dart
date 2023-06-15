@@ -41,53 +41,72 @@ class _HomeViewState extends ConsumerState<_HomeView> {
     final nowPlayingMovies = ref.watch( nowPlayingMoviesProvider );
     final slideShowMovies = ref.watch( moviesSlideshowProvider );
 
-    return SingleChildScrollView(
-      child: Column(
-        children: [
-    
-          const CustomAppBar(),
-    
-          MoviesSlideshow( movies: slideShowMovies ),
-    
-          MovieHorizontalListView(
-            movies: nowPlayingMovies,
-            title: 'In the cinema',
-            subtitle: 'Monday 20',
-            loadNextPage: () { 
-              ref.read( nowPlayingMoviesProvider.notifier ).loadNextPage();
-             }
-          ),
-    
-          MovieHorizontalListView(
-            movies: nowPlayingMovies,
-            title: 'Soon',
-            subtitle: 'This month',
-            loadNextPage: () { 
-              ref.read( nowPlayingMoviesProvider.notifier ).loadNextPage();
-             }
-          ),
-    
-          MovieHorizontalListView(
-            movies: nowPlayingMovies,
-            title: 'Popular',
-            // subtitle: 'Monday 20',
-            loadNextPage: () { 
-              ref.read( nowPlayingMoviesProvider.notifier ).loadNextPage();
-             }
-          ),
-    
-          MovieHorizontalListView(
-            movies: nowPlayingMovies,
-            title: 'Best Rate',
-            subtitle: 'Of all time',
-            loadNextPage: () { 
-              ref.read( nowPlayingMoviesProvider.notifier ).loadNextPage();
-             }
-          ),
+    return CustomScrollView(
+      slivers: [
 
-          const SizedBox( height:  50 )
-        ],
-      ),
+        // dislpay navbar when scroll up
+        const SliverAppBar(
+          floating: true,
+          flexibleSpace: FlexibleSpaceBar(
+            title: CustomAppBar(),
+          ),
+        ),
+
+        SliverList(
+          delegate: SliverChildBuilderDelegate(
+            ( context, index ) {
+              return Column( 
+                children: [
+            
+                  MoviesSlideshow( movies: slideShowMovies ),
+            
+                  MovieHorizontalListView(
+                    movies: nowPlayingMovies,
+                    title: 'In the cinema',
+                    subtitle: 'Monday 20',
+                    loadNextPage: () { 
+                      ref.read( nowPlayingMoviesProvider.notifier ).loadNextPage();
+                    }
+                  ),
+            
+                  MovieHorizontalListView(
+                    movies: nowPlayingMovies,
+                    title: 'Soon',
+                    subtitle: 'This month',
+                    loadNextPage: () { 
+                      ref.read( nowPlayingMoviesProvider.notifier ).loadNextPage();
+                    }
+                  ),
+            
+                  MovieHorizontalListView(
+                    movies: nowPlayingMovies,
+                    title: 'Popular',
+                    // subtitle: 'Monday 20',
+                    loadNextPage: () { 
+                      ref.read( nowPlayingMoviesProvider.notifier ).loadNextPage();
+                    }
+                  ),
+            
+                  MovieHorizontalListView(
+                    movies: nowPlayingMovies,
+                    title: 'Best Rate',
+                    subtitle: 'Of all time',
+                    loadNextPage: () { 
+                      ref.read( nowPlayingMoviesProvider.notifier ).loadNextPage();
+                    }
+                  ),
+
+                  const SizedBox( height:  10 ),
+                ],
+              );
+            },
+            // one page and not infinite
+            childCount: 1
+          ) 
+        )
+      ],
+      
+      
     );
   }
 }
